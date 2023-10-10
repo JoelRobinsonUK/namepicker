@@ -147,6 +147,7 @@
             "Zane",
             "Matus",
             "Stephen",
+            "Buba",
             "Connor",
             "Baylie",
             "Arber",
@@ -173,15 +174,25 @@
         ];
 
         $(".SD31").click((e) => {
-            let name = SD31[Math.floor(Math.random() * SD31.length)]
 
+            let name = SD31[Math.floor(Math.random() * SD31.length)]
             $(".name").html(name);
+
+            // setTimeout(() => {
+            //     $(".name").html("");
+            // }, 5000);
+
         });
 
         $(".SD32").click((e) => {
-            let name = SD32[Math.floor(Math.random() * SD32.length)]
 
+            let name = SD32[Math.floor(Math.random() * SD32.length)]
             $(".name").html(name);
+
+            // setTimeout(() => {
+            //     $(".name").html("");
+            // }, 5000);
+
         });
 
     });
