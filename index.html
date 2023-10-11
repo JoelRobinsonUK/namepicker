@@ -78,7 +78,7 @@
             box-shadow: 5px 5px 10px #000;
         }
 
-        .button:active{
+        .button:active {
             background-color: #fff;
             color: #111;
             box-shadow: 5px 5px 10px #000;
@@ -92,7 +92,7 @@
             background-color: red;
         }
 
-        a{
+        a {
             height: 100%;
             display: flex;
             align-items: center;
@@ -135,7 +135,7 @@
 <script>
     $(document).ready(() => {
 
-        const SD31 = [
+        let SD31 = [
             "David",
             "Rakhin",
             "Tymani",
@@ -154,7 +154,7 @@
             "Muhiyadin"
         ];
 
-        const SD32 = [
+        let SD32 = [
             "Lucy",
             "Jake",
             "Giedrius",
@@ -173,29 +173,68 @@
             "Vitali"
         ];
 
+        SD31 = Shuffle(SD31);
+        let last31 = SD31[SD31.length-1];
+
+        SD31 = Shuffle(SD31);
+        let last32 = SD32[SD32.length-1];
+
         $(".SD31").click((e) => {
 
-            let name = SD31[Math.floor(Math.random() * SD31.length)]
+            let name = SD31.shift();
+            SD31.push(name);
+
             $(".name").html(name);
 
-            // setTimeout(() => {
-            //     $(".name").html("");
-            // }, 5000);
+            if(name === last31){
+                SD31 = Shuffle(SD31);
+                let last31 = SD31[SD31.length-1];
+            }
+
+            Print(SD31)
 
         });
 
         $(".SD32").click((e) => {
 
-            let name = SD32[Math.floor(Math.random() * SD32.length)]
+            let name = SD32.shift();
+            SD32.push(name);
+
             $(".name").html(name);
 
-            // setTimeout(() => {
-            //     $(".name").html("");
-            // }, 5000);
+            if(name === last31){
+                SD32 = Shuffle(SD32);
+                let last32 = SD32[SD32.length-1];
+            }
+
+            Print(SD32)
 
         });
 
     });
+
+    const Print = (arr) => {
+        console.clear();
+        console.log(arr);
+    }
+
+    function Shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+
+        // While there remain elements to shuffle.
+        while (currentIndex > 0) {
+
+            // Pick a remaining element.
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]];
+        }
+
+        return array;
+    }
 </script>
 
 </html>
