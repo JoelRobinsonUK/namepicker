@@ -8,6 +8,21 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
 
-  overflow-y: hidden;
+main{
+  margin: 40px auto;
+  width: 90%;
+}
+
+@media screen and (min-width: 768px) {
+  main{
+    width: 70%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  main{
+    width: 60%;
+  }
 }
