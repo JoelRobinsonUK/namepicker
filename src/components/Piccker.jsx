@@ -1,30 +1,22 @@
-import { useEffect, useState } from "react"
-// import { Shuffle } from "../utils"
+import { useEffect, useState } from "react";
+import GroupButton from "./GroupButton";
+import { useGroupContext } from "../hooks/useGroupsContext";
 
-export default function Picker(){
-    const [picked, setPicked] = useState("");
-    const [groups, setGroups] = useState("");
+export default function Picker() {
+  const { groups } = useGroupContext();
+  const [picked, setPicked] = useState("Click or add group to start");
 
-    useEffect(() => {
-        if(localStorage.getItem("groups")){
-            setGroups(JSON.parse(localStorage.getItem("groups")));
-
-            // for(let key in groups){
-            //     groups[key] = Shuffle(groups[key]);
-            // }
-        }
-    }, ["groups"])
-
-    return(
-        <div className="grid grid-cols-12">
-            <h2 className="text-center col-span-12 text-5xl border-2 border-black p-5 w-full rounded-xl">{picked}</h2>
-            {Object.keys(groups).map((key) => (
-                <button id={key} onClick={(e) => {
-                    setPicked(groups[key][Math.floor(Math.random()* groups[key].length)]);
-                }}>
-                    {key}
-                </button>
-            ))}
-        </div>
-    )
+  return (
+    <div className="flex h-full items-center">
+      <div className="grid grid-cols-12 gap-3">
+        <h2 className="col-span-12 w-full rounded-xl border-2 border-black p-5 text-center text-5xl">
+          {picked}
+        </h2>
+        {groups &&
+          Object.keys(groups).map((group, i) => (
+            <GroupButton key={i} id={group.id} names={group.names} />
+          ))}
+      </div>
+    </div>
+  );
 }

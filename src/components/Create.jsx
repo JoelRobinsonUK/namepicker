@@ -1,40 +1,68 @@
-import { useState } from "react"
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { useGroupContext } from "../hooks/useGroupsContext";
 
 export default function Create() {
-    const [groupId, setGroupId] = useState("");
-    const [groupNames, setGroupNames] = useState("");
-    return (
-        <form action="">
-            <label htmlFor="group-name" className="block">
-                Name the group you want to create
-                <input id="group-name" type="text" onChange={(e) => {
-                    setGroupId(e.target.value);
-                }} className="border-2 ml-3" />
-            </label>
+  const { groups, dispatch } = useGroupContext();
+  const [groupId, setGroupId] = useState("");
+  const [groupNames, setGroupNames] = useState("");
 
-            <label htmlFor="name-set">
-                Enter names (seperate by spaces)
-                <textarea id="name-set" cols="30" rows="10" onChange={(e) => {
-                    setGroupNames(e.target.value);
-                }} className="block border-2"></textarea>
-            </label>
+  const navigate = useNavigate();
 
-            <button className="border-2" onClick={() => {
-                if(localStorage.getItem("groups")){
-                    let groups = JSON.parse(localStorage.getItem("groups"));
-                    groups[groupId] = groupNames.split(" ");
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-                    localStorage.setItem("groups", JSON.stringify(groups));
-                } else {
-                    let groups = {};
-                    
-                    groups[groupId] = groupNames.split(" ");
+    if (groups) {
+      const newGroup = {
+        id: groupId,
+        names: groupNames,
+      };
 
-                    localStorage.setItem("groups", JSON.stringify(groups));
-                }
-            }}>
-                Add Group
-            </button>
-        </form>
-    )
+      dispatch("ADD_GROUP", newGroup);
+      localStorage.setItem("groups", JSON.stringify(groups));
+
+      console.log(groups);
+    } else {
+      let groups = [];
+      groups.push({ id: groupId, names: groupNames.split(" ") });
+
+      dispatch("SET_GROUPS", groups);
+      localStorage.setItem("groups", JSON.stringify(groups));
+
+      console.log(groups);
+    }
+
+    navigate("/");
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="group-name" className="block">
+        Name the group you want to create
+        <input
+          id="group-name"
+          type="text"
+          onChange={(e) => {
+            setGroupId(e.target.value);
+          }}
+          className="ml-3 border-2"
+        />
+      </label>
+
+      <label htmlFor="name-set">
+        Enter names (seperate by spaces)
+        <textarea
+          id="name-set"
+          cols="30"
+          rows="10"
+          onChange={(e) => {
+            setGroupNames(e.target.value);
+          }}
+          className="block border-2"
+        ></textarea>
+      </label>
+
+      <button className="border-2">Add Group</button>
+    </form>
+  );
 }
