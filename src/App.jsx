@@ -8,18 +8,18 @@ import { useEffect } from "react";
 function App() {
   const { groups, dispatch } = useGroupContext();
 
-  useEffect(() => {
-    if (localStorage.getItem("groups")) {
-      const getGroups = JSON.parse(localStorage.getItem("groups"));
+  // useEffect(() => {
+  //   if (localStorage.getItem("groups")) {
+  //     const getGroups = JSON.parse(localStorage.getItem("groups"));
 
-      dispatch({
-        type: "SET_GROUPS",
-        payload: getGroups,
-      });
+  //     dispatch({
+  //       type: "SET_GROUPS",
+  //       payload: getGroups,
+  //     });
 
-      console.log(getGroups);
-    }
-  }, []);
+  //     console.log(getGroups);
+  //   }
+  // }, []);
 
   return (
     <BrowserRouter>

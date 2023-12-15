@@ -10,7 +10,7 @@ export const groupReducer = (state, action) => {
       };
     case "ADD_GROUP":
       return {
-        groups: [action.payload, ...state.groups],
+        groups: state.groups.push(action.payload),
       };
     default:
       return state;

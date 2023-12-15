@@ -12,25 +12,22 @@ export default function Create() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (groups) {
-      const newGroup = {
-        id: groupId,
-        names: groupNames,
-      };
+    let groups = [];
 
-      dispatch("ADD_GROUP", newGroup);
-      localStorage.setItem("groups", JSON.stringify(groups));
-
-      console.log(groups);
-    } else {
-      let groups = [];
-      groups.push({ id: groupId, names: groupNames.split(" ") });
-
-      dispatch("SET_GROUPS", groups);
-      localStorage.setItem("groups", JSON.stringify(groups));
-
-      console.log(groups);
+    if (localStorage.getItem("groups")) {
+      groups = JSON.parse(localStorage.getItem("groups"));
     }
+
+    const newGroup = {
+      id: groupId,
+      names: groupNames,
+    };
+    groups.push({ title: groupId, names: groupNames.split(" ") });
+
+    // dispatch("SET_GROUPS", groups);
+    localStorage.setItem("groups", JSON.stringify(groups));
+
+    console.log(groups);
 
     navigate("/");
   };
